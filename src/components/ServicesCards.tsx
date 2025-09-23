@@ -168,17 +168,13 @@ export function ServicesCards() {
                             whileHover={{ y: -5 }}
                         >
                             <Link to={service.link} className="block">
-                                <div className={cn(
-                                    "inline-flex items-center justify-center w-16 h-16 rounded-2xl mb-6",
-                                    `bg-gradient-to-br ${service.gradient} text-white shadow-lg group-hover:scale-110 transition-transform duration-300`
-                                )}>
-                                    <service.icon className="w-8 h-8" />
+                                <div className="w-16 h-16 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
+                                    <service.icon className="w-8 h-8 text-white" />
                                 </div>
                                 
                                 <h3 className={cn(
-                                    "text-2xl font-bold mb-4 group-hover:text-transparent group-hover:bg-clip-text transition-all duration-300",
-                                    isLight ? "text-gray-900" : "text-white",
-                                    `group-hover:bg-gradient-to-r group-hover:${service.gradient}`
+                                    "text-2xl font-bold mb-4 transition-colors duration-300",
+                                    isLight ? "text-gray-900" : "text-white"
                                 )}>
                                     {service.title}
                                 </h3>
@@ -191,10 +187,7 @@ export function ServicesCards() {
                                 </p>
                                 
                                 <div className="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform duration-300">
-                                    <span className={cn(
-                                        "mr-2",
-                                        `bg-gradient-to-r ${service.gradient} bg-clip-text text-transparent`
-                                    )}>
+                                    <span className="mr-2 bg-gradient-to-r from-[#00B483] to-[#00B843] bg-clip-text text-transparent">
                                         Learn More
                                     </span>
                                     <ArrowRight className="w-4 h-4 text-[#00B483]" />

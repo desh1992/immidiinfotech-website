@@ -153,8 +153,7 @@ export function DataAnalyticsService() {
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
+                    animate="visible"
                     className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
                 >
                     {services.map((service, index) => (
@@ -208,8 +207,7 @@ export function DataAnalyticsService() {
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
-                    whileInView="visible"
-                    viewport={{ once: true, margin: "-100px" }}
+                    animate="visible"
                     className="text-center"
                 >
                     <motion.div

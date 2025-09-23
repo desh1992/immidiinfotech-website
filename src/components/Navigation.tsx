@@ -3,10 +3,20 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
+import { 
+    Brain, 
+    Target, 
+    Code, 
+    Cloud, 
+    BarChart3, 
+    Award,
+    ChevronDown
+} from "lucide-react";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
     const location = useLocation();
 
     const toggleMenu = () => {
@@ -21,9 +31,18 @@ export function Navigation() {
         setIsMenuOpen(false);
     };
 
+    const services = [
+        { id: "ai-ml", label: "AI & Machine Learning", path: "/services/ai-ml", icon: Brain },
+        { id: "program-management", label: "Program & Project Management", path: "/services/program-management", icon: Target },
+        { id: "software-development", label: "Software Development & Support", path: "/services/software-development", icon: Code },
+        { id: "infrastructure", label: "Infrastructure Transformation", path: "/services/infrastructure", icon: Cloud },
+        { id: "data-analytics", label: "Data Analytics & BI", path: "/services/data-analytics", icon: BarChart3 },
+        { id: "center-excellence", label: "Center of Excellence", path: "/services/center-excellence", icon: Award },
+    ];
+
     const navLinks = [
         { id: "home", label: "Home", path: "/" },
-        { id: "services", label: "Services & Solutions", path: "/#services" },
+        { id: "services", label: "Services & Solutions", path: "/#services", hasDropdown: true },
         { id: "careers", label: "Careers", path: "/#careers" },
         { id: "company", label: "Company Details", path: "/#company" },
         { id: "talent-share", label: "Talent-Share Project", path: "/#talent-share" },
@@ -61,16 +80,68 @@ export function Navigation() {
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link) => (
-                            <Link
-                                key={link.id}
-                                to={link.path}
-                                className={cn(
-                                    "text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
-                                    location.pathname === link.path && "text-[#00B483]"
+                            <div key={link.id} className="relative">
+                                {link.hasDropdown ? (
+                                    <div
+                                        className="relative"
+                                        onMouseEnter={() => setIsServicesDropdownOpen(true)}
+                                        onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                                    >
+                                        <button
+                                            className={cn(
+                                                "flex items-center space-x-1 text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
+                                                location.pathname.startsWith('/services') && "text-[#00B483]"
+                                            )}
+                                        >
+                                            <span>{link.label}</span>
+                                            <ChevronDown className={cn(
+                                                "w-4 h-4 transition-transform duration-200",
+                                                isServicesDropdownOpen && "rotate-180"
+                                            )} />
+                                        </button>
+                                        
+                                        {/* Dropdown Menu */}
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 10 }}
+                                            animate={{ 
+                                                opacity: isServicesDropdownOpen ? 1 : 0, 
+                                                y: isServicesDropdownOpen ? 0 : 10 
+                                            }}
+                                            transition={{ duration: 0.2 }}
+                                            className={cn(
+                                                "absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden",
+                                                isServicesDropdownOpen ? "block" : "hidden"
+                                            )}
+                                        >
+                                            <div className="p-2">
+                                                {services.map((service) => (
+                                                    <Link
+                                                        key={service.id}
+                                                        to={service.path}
+                                                        className="flex items-center space-x-3 p-3 rounded-lg hover:bg-gray-50 transition-colors duration-200"
+                                                        onClick={() => setIsServicesDropdownOpen(false)}
+                                                    >
+                                                        <div className="w-8 h-8 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-lg flex items-center justify-center">
+                                                            <service.icon className="w-4 h-4 text-white" />
+                                                        </div>
+                                                        <span className="text-gray-700 font-medium">{service.label}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        to={link.path}
+                                        className={cn(
+                                            "text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
+                                            location.pathname === link.path && "text-[#00B483]"
+                                        )}
+                                    >
+                                        {link.label}
+                                    </Link>
                                 )}
-                            >
-                                {link.label}
-                            </Link>
+                            </div>
                         ))}
                     </div>
 
@@ -110,17 +181,63 @@ export function Navigation() {
                 >
                     <div className="py-4 space-y-2">
                         {navLinks.map((link, index) => (
-                            <Link
-                                key={link.id}
-                                to={link.path}
-                                className={cn(
-                                    "block w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200",
-                                    location.pathname === link.path && "text-[#00B483] bg-gray-50"
+                            <div key={link.id}>
+                                {link.hasDropdown ? (
+                                    <div>
+                                        <button
+                                            className="flex items-center justify-between w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                                            onClick={() => setIsServicesDropdownOpen(!isServicesDropdownOpen)}
+                                        >
+                                            <span>{link.label}</span>
+                                            <ChevronDown className={cn(
+                                                "w-4 h-4 transition-transform duration-200",
+                                                isServicesDropdownOpen && "rotate-180"
+                                            )} />
+                                        </button>
+                                        
+                                        {/* Mobile Services Dropdown */}
+                                        <motion.div
+                                            initial={{ opacity: 0, height: 0 }}
+                                            animate={{ 
+                                                opacity: isServicesDropdownOpen ? 1 : 0, 
+                                                height: isServicesDropdownOpen ? "auto" : 0 
+                                            }}
+                                            transition={{ duration: 0.2 }}
+                                            className="overflow-hidden"
+                                        >
+                                            <div className="pl-6 space-y-1">
+                                                {services.map((service) => (
+                                                    <Link
+                                                        key={service.id}
+                                                        to={service.path}
+                                                        className="flex items-center space-x-3 px-4 py-2 text-gray-600 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200"
+                                                        onClick={() => {
+                                                            setIsMenuOpen(false);
+                                                            setIsServicesDropdownOpen(false);
+                                                        }}
+                                                    >
+                                                        <div className="w-6 h-6 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded flex items-center justify-center">
+                                                            <service.icon className="w-3 h-3 text-white" />
+                                                        </div>
+                                                        <span className="text-sm">{service.label}</span>
+                                                    </Link>
+                                                ))}
+                                            </div>
+                                        </motion.div>
+                                    </div>
+                                ) : (
+                                    <Link
+                                        to={link.path}
+                                        className={cn(
+                                            "block w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200",
+                                            location.pathname === link.path && "text-[#00B483] bg-gray-50"
+                                        )}
+                                        onClick={() => setIsMenuOpen(false)}
+                                    >
+                                        {link.label}
+                                    </Link>
                                 )}
-                                onClick={() => setIsMenuOpen(false)}
-                            >
-                                {link.label}
-                            </Link>
+                            </div>
                         ))}
                     </div>
                 </motion.div>
