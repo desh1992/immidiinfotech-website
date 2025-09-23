@@ -3,8 +3,13 @@
 import { motion } from "framer-motion";
 import { Mail, Phone, MapPin } from "lucide-react";
 import { useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 export function Contact() {
+    const { theme } = useTheme();
+    const isLight = theme === 'light';
+    
     const [formData, setFormData] = useState({
         name: "",
         email: "",
@@ -65,7 +70,12 @@ export function Contact() {
     };
 
     return (
-        <section id="contact" className="py-20 bg-gray-50">
+        <section id="contact" className={cn(
+            "py-20 transition-colors duration-500",
+            isLight 
+                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                : "bg-[#030303]"
+        )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     variants={containerVariants}

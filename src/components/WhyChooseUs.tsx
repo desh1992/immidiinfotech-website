@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Settings, Bell, DollarSign } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 export function WhyChooseUs() {
+    const { theme } = useTheme();
+    const isLight = theme === 'light';
     const features = [
         {
             icon: Settings,
@@ -45,7 +49,12 @@ export function WhyChooseUs() {
     };
 
     return (
-        <section className="py-20 bg-gray-50">
+        <section className={cn(
+            "py-20 transition-colors duration-500",
+            isLight 
+                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                : "bg-[#030303]"
+        )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     variants={containerVariants}
@@ -56,7 +65,10 @@ export function WhyChooseUs() {
                 >
                     <motion.h2
                         variants={itemVariants}
-                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-4"
+                        className={cn(
+                            "text-4xl md:text-5xl font-bold mb-4 transition-colors duration-300",
+                            isLight ? "text-gray-900" : "text-white"
+                        )}
                     >
                         Why Choose Immidi Infotech?
                     </motion.h2>
@@ -73,15 +85,26 @@ export function WhyChooseUs() {
                         <motion.div
                             key={index}
                             variants={itemVariants}
-                            className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 group"
+                            className={cn(
+                                "rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 group",
+                                isLight 
+                                    ? "bg-white border border-gray-200" 
+                                    : "bg-gray-800 border border-gray-700"
+                            )}
                         >
                             <div className="w-16 h-16 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
                                 <feature.icon className="w-8 h-8 text-white" />
                             </div>
-                            <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                            <h3 className={cn(
+                                "text-xl font-semibold mb-4 transition-colors duration-300",
+                                isLight ? "text-gray-900" : "text-white"
+                            )}>
                                 {feature.title}
                             </h3>
-                            <p className="text-gray-600 leading-relaxed">
+                            <p className={cn(
+                                "leading-relaxed transition-colors duration-300",
+                                isLight ? "text-gray-600" : "text-gray-300"
+                            )}>
                                 {feature.description}
                             </p>
                         </motion.div>

@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Lightbulb, Star, Rocket, Users } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 export function TalentShare() {
+    const { theme } = useTheme();
+    const isLight = theme === 'light';
     const projectFeatures = [
         {
             icon: Lightbulb,
@@ -42,7 +46,12 @@ export function TalentShare() {
     };
 
     return (
-        <section id="talent-share" className="py-20 bg-white">
+        <section id="talent-share" className={cn(
+            "py-20 transition-colors duration-500",
+            isLight 
+                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                : "bg-[#030303]"
+        )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
                     {/* Left Side - Text Content */}

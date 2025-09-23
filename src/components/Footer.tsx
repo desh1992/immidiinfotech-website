@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Linkedin, Twitter, Facebook } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 export function Footer() {
+    const { theme } = useTheme();
+    const isLight = theme === 'light';
     const footerLinks = [
         { id: "home", label: "Home" },
         { id: "services", label: "Services" },
@@ -49,7 +53,10 @@ export function Footer() {
     };
 
     return (
-        <footer className="bg-gray-900 text-white">
+        <footer className={cn(
+            "transition-colors duration-500",
+            isLight ? "bg-gray-900 text-white" : "bg-gray-100 text-gray-900"
+        )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
                 <motion.div
                     variants={containerVariants}

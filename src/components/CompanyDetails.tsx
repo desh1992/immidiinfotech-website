@@ -2,8 +2,12 @@
 
 import { motion } from "framer-motion";
 import { Building, Users, TrendingUp } from "lucide-react";
+import { useTheme } from "@/contexts/ThemeContext";
+import { cn } from "@/lib/utils";
 
 export function CompanyDetails() {
+    const { theme } = useTheme();
+    const isLight = theme === 'light';
     const statCards = [
         {
             icon: Building,
@@ -45,7 +49,12 @@ export function CompanyDetails() {
     };
 
     return (
-        <section id="company" className="py-20 bg-gray-50">
+        <section id="company" className={cn(
+            "py-20 transition-colors duration-500",
+            isLight 
+                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                : "bg-[#030303]"
+        )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <motion.div
                     variants={containerVariants}
