@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link, useLocation } from "react-router-dom";
 import { 
@@ -30,6 +30,52 @@ export function Navigation() {
         }
         setIsMenuOpen(false);
     };
+
+    const handleNavigation = (link: any) => {
+        if (link.path.startsWith('/#')) {
+            // Handle section scrolling
+            const sectionId = link.path.substring(2); // Remove '/#'
+            if (location.pathname === '/') {
+                // We're on home page, just scroll
+                scrollToSection(sectionId);
+            } else {
+                // We're on a different page, navigate to home first then scroll
+                window.location.href = `/#${sectionId}`;
+            }
+        } else if (link.path === '/') {
+            // Handle home navigation
+            if (location.pathname === '/') {
+                scrollToSection('home');
+            } else {
+                window.location.href = '/';
+            }
+        } else {
+            // Handle other routes normally
+            window.location.href = link.path;
+        }
+    };
+
+    // Handle URL hash changes on page load
+    useEffect(() => {
+        const handleHashChange = () => {
+            const hash = window.location.hash.substring(1); // Remove '#'
+            if (hash && location.pathname === '/') {
+                setTimeout(() => {
+                    scrollToSection(hash);
+                }, 100); // Small delay to ensure page is loaded
+            }
+        };
+
+        // Check for hash on component mount
+        handleHashChange();
+
+        // Listen for hash changes
+        window.addEventListener('hashchange', handleHashChange);
+        
+        return () => {
+            window.removeEventListener('hashchange', handleHashChange);
+        };
+    }, [location.pathname]);
 
     const services = [
         { id: "ai-ml", label: "AI & Machine Learning", path: "/services/ai-ml", icon: Brain },
@@ -131,15 +177,16 @@ export function Navigation() {
                                         </motion.div>
                                     </div>
                                 ) : (
-                                    <Link
-                                        to={link.path}
+                                    <button
+                                        onClick={() => handleNavigation(link)}
                                         className={cn(
                                             "text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
-                                            location.pathname === link.path && "text-[#00B483]"
+                                            (location.pathname === link.path || 
+                                             (link.path.startsWith('/#') && location.pathname === '/')) && "text-[#00B483]"
                                         )}
                                     >
                                         {link.label}
-                                    </Link>
+                                    </button>
                                 )}
                             </div>
                         ))}
@@ -226,16 +273,19 @@ export function Navigation() {
                                         </motion.div>
                                     </div>
                                 ) : (
-                                    <Link
-                                        to={link.path}
+                                    <button
+                                        onClick={() => {
+                                            handleNavigation(link);
+                                            setIsMenuOpen(false);
+                                        }}
                                         className={cn(
                                             "block w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200",
-                                            location.pathname === link.path && "text-[#00B483] bg-gray-50"
+                                            (location.pathname === link.path || 
+                                             (link.path.startsWith('/#') && location.pathname === '/')) && "text-[#00B483] bg-gray-50"
                                         )}
-                                        onClick={() => setIsMenuOpen(false)}
                                     >
                                         {link.label}
-                                    </Link>
+                                    </button>
                                 )}
                             </div>
                         ))}
