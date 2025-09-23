@@ -2,10 +2,12 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Link, useLocation } from "react-router-dom";
 import { cn } from "@/lib/utils";
 
 export function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const location = useLocation();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -20,12 +22,12 @@ export function Navigation() {
     };
 
     const navLinks = [
-        { id: "home", label: "Home" },
-        { id: "services", label: "Services & Solutions" },
-        { id: "careers", label: "Careers" },
-        { id: "company", label: "Company Details" },
-        { id: "talent-share", label: "Talent-Share Project" },
-        { id: "contact", label: "Contact Us" },
+        { id: "home", label: "Home", path: "/" },
+        { id: "services", label: "Services & Solutions", path: "/#services" },
+        { id: "careers", label: "Careers", path: "/#careers" },
+        { id: "company", label: "Company Details", path: "/#company" },
+        { id: "talent-share", label: "Talent-Share Project", path: "/#talent-share" },
+        { id: "contact", label: "Contact Us", path: "/#contact" },
     ];
 
     return (
@@ -33,40 +35,42 @@ export function Navigation() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                 <div className="flex items-center justify-between h-16">
                     {/* Logo */}
-                    <motion.div
-                        className="flex items-center space-x-3 cursor-pointer"
-                        whileHover={{ scale: 1.05 }}
-                        transition={{ type: "spring", stiffness: 400, damping: 10 }}
-                        onClick={() => scrollToSection("home")}
-                    >
-                        <div className="w-10 h-10 bg-[#00B483] rounded-lg flex items-center justify-center">
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect x="4" y="4" width="16" height="16" rx="2" fill="white" />
-                                <rect x="6" y="6" width="12" height="8" rx="1" fill="#00B483" />
-                                <rect x="6" y="10" width="12" height="4" rx="1" fill="#00B483" />
-                            </svg>
-                        </div>
-                        <span className="text-xl font-bold text-gray-900">Immidi Infotech</span>
-                    </motion.div>
+                    <Link to="/" className="flex items-center space-x-3">
+                        <motion.div
+                            className="flex items-center space-x-3 cursor-pointer"
+                            whileHover={{ scale: 1.05 }}
+                            transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                        >
+                            <div className="w-10 h-10 bg-[#00B483] rounded-lg flex items-center justify-center">
+                                <svg
+                                    width="24"
+                                    height="24"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                >
+                                    <rect x="4" y="4" width="16" height="16" rx="2" fill="white" />
+                                    <rect x="6" y="6" width="12" height="8" rx="1" fill="#00B483" />
+                                    <rect x="6" y="10" width="12" height="4" rx="1" fill="#00B483" />
+                                </svg>
+                            </div>
+                            <span className="text-xl font-bold text-gray-900">Immidi Infotech</span>
+                        </motion.div>
+                    </Link>
 
                     {/* Desktop Navigation */}
                     <div className="hidden md:flex items-center space-x-8">
                         {navLinks.map((link) => (
-                            <motion.button
+                            <Link
                                 key={link.id}
-                                onClick={() => scrollToSection(link.id)}
-                                className="text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200"
-                                whileHover={{ y: -2 }}
-                                transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                                to={link.path}
+                                className={cn(
+                                    "text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
+                                    location.pathname === link.path && "text-[#00B483]"
+                                )}
                             >
                                 {link.label}
-                            </motion.button>
+                            </Link>
                         ))}
                     </div>
 
@@ -106,16 +110,17 @@ export function Navigation() {
                 >
                     <div className="py-4 space-y-2">
                         {navLinks.map((link, index) => (
-                            <motion.button
+                            <Link
                                 key={link.id}
-                                onClick={() => scrollToSection(link.id)}
-                                className="block w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200"
-                                initial={{ opacity: 0, x: -20 }}
-                                animate={{ opacity: 1, x: 0 }}
-                                transition={{ delay: index * 0.1 }}
+                                to={link.path}
+                                className={cn(
+                                    "block w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200",
+                                    location.pathname === link.path && "text-[#00B483] bg-gray-50"
+                                )}
+                                onClick={() => setIsMenuOpen(false)}
                             >
                                 {link.label}
-                            </motion.button>
+                            </Link>
                         ))}
                     </div>
                 </motion.div>
