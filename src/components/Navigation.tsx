@@ -17,10 +17,26 @@ import { cn } from "@/lib/utils";
 export function Navigation() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isServicesDropdownOpen, setIsServicesDropdownOpen] = useState(false);
+    const [dropdownTimeout, setDropdownTimeout] = useState<NodeJS.Timeout | null>(null);
     const location = useLocation();
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
+    };
+
+    const handleMouseEnter = () => {
+        if (dropdownTimeout) {
+            clearTimeout(dropdownTimeout);
+            setDropdownTimeout(null);
+        }
+        setIsServicesDropdownOpen(true);
+    };
+
+    const handleMouseLeave = () => {
+        const timeout = setTimeout(() => {
+            setIsServicesDropdownOpen(false);
+        }, 150); // Small delay to allow user to move mouse to dropdown
+        setDropdownTimeout(timeout);
     };
 
     const scrollToSection = (sectionId: string) => {
@@ -77,6 +93,15 @@ export function Navigation() {
         };
     }, [location.pathname]);
 
+    // Cleanup timeout on unmount
+    useEffect(() => {
+        return () => {
+            if (dropdownTimeout) {
+                clearTimeout(dropdownTimeout);
+            }
+        };
+    }, [dropdownTimeout]);
+
     const services = [
         { id: "ai-ml", label: "AI & Machine Learning", path: "/services/ai-ml", icon: Brain },
         { id: "program-management", label: "Program & Project Management", path: "/services/program-management", icon: Target },
@@ -130,8 +155,8 @@ export function Navigation() {
                                 {link.hasDropdown ? (
                                     <div
                                         className="relative"
-                                        onMouseEnter={() => setIsServicesDropdownOpen(true)}
-                                        onMouseLeave={() => setIsServicesDropdownOpen(false)}
+                                        onMouseEnter={handleMouseEnter}
+                                        onMouseLeave={handleMouseLeave}
                                     >
                                         <button
                                             onClick={() => handleNavigation(link)}
@@ -157,9 +182,11 @@ export function Navigation() {
                                             }}
                                             transition={{ duration: 0.2 }}
                                             className={cn(
-                                                "absolute top-full left-0 mt-2 w-80 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden",
+                                                "absolute top-full left-0 mt-1 w-80 bg-white rounded-lg shadow-lg border border-gray-200 overflow-hidden z-50",
                                                 isServicesDropdownOpen ? "block" : "hidden"
                                             )}
+                                            onMouseEnter={handleMouseEnter}
+                                            onMouseLeave={handleMouseLeave}
                                         >
                                             <div className="p-2">
                                                 {services.map((service) => (

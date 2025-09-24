@@ -14,6 +14,8 @@ import { SoftwareDevelopmentService } from './pages/SoftwareDevelopmentService'
 import { InfrastructureService } from './pages/InfrastructureService'
 import { DataAnalyticsService } from './pages/DataAnalyticsService'
 import { CenterExcellenceService } from './pages/CenterExcellenceService'
+import { CompanyDetailsPage } from './pages/CompanyDetailsPage'
+import { TalentShareDetailsPage } from './pages/TalentShareDetailsPage'
 
 function HomePage() {
   return (
@@ -49,6 +51,8 @@ function App() {
               <Route path="/services/infrastructure" element={<InfrastructureService />} />
               <Route path="/services/data-analytics" element={<DataAnalyticsService />} />
               <Route path="/services/center-excellence" element={<CenterExcellenceService />} />
+              <Route path="/company-details" element={<CompanyDetailsPage />} />
+              <Route path="/talent-share-details" element={<TalentShareDetailsPage />} />
             </Routes>
           </main>
           <Footer />
