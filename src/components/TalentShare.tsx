@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Lightbulb, Star, Rocket, Users } from "lucide-react";
+import { Lightbulb, Star, Rocket, Users, ArrowRight } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 export function TalentShare() {
     const { theme } = useTheme();
@@ -70,14 +71,14 @@ export function TalentShare() {
                         
                         <motion.p
                             variants={itemVariants}
-                            className="text-gray-600 leading-relaxed mb-8"
+                            className="text-gray-600 leading-relaxed mb-6"
                         >
-                            One of the project is <strong>www.talent-share.com</strong> which has a novel concept and provides unique services to clients. This project showcases our ability to create innovative solutions that address real-world business needs.
+                            One of our key projects is <strong>www.talent-share.com</strong> which has a novel concept and provides unique services to clients. This project showcases our ability to create innovative solutions.
                         </motion.p>
 
                         <motion.div
                             variants={containerVariants}
-                            className="flex flex-wrap gap-4 mb-8"
+                            className="flex flex-wrap gap-4 mb-6"
                         >
                             {projectFeatures.map((feature, index) => (
                                 <motion.div
@@ -93,14 +94,18 @@ export function TalentShare() {
                             ))}
                         </motion.div>
 
-                        <motion.button
+                        <motion.div
                             variants={itemVariants}
-                            className="bg-gradient-to-r from-[#00B483] to-[#00B843] text-white px-8 py-4 rounded-full font-semibold hover:shadow-lg transition-all duration-300 hover:scale-105"
-                            whileHover={{ scale: 1.05 }}
-                            whileTap={{ scale: 0.95 }}
+                            className="pt-2"
                         >
-                            Learn More About Talent-Share
-                        </motion.button>
+                            <Link
+                                to="/talent-share-details"
+                                className="inline-flex items-center space-x-2 text-[#00B483] hover:text-[#00B843] font-semibold transition-colors duration-200 group"
+                            >
+                                <span>Learn More</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                            </Link>
+                        </motion.div>
                     </motion.div>
 
                     {/* Right Side - Browser Mockup */}

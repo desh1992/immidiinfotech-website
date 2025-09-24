@@ -1,9 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Building, Users, TrendingUp } from "lucide-react";
+import { Building, Users, TrendingUp, ArrowRight } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
 
 export function CompanyDetails() {
     const { theme } = useTheme();
@@ -91,7 +92,14 @@ export function CompanyDetails() {
                             variants={itemVariants}
                             className="text-gray-600 leading-relaxed"
                         >
-                            Immidi Infotech is actively into software development. We are working on B2B and B2C based portals development in-house. One of the project is{" "}
+                            We provide technology solutions and IT staffing services to startups and fortune 500 companies. Our team consists of range of professionals from project management, architecture, and development to support to satisfy all kinds of technology needs.
+                        </motion.p>
+                        
+                        <motion.p
+                            variants={itemVariants}
+                            className="text-gray-600 leading-relaxed"
+                        >
+                            We are actively into software development, working on B2B and B2C based portals including{" "}
                             <a 
                                 href="https://www.talent-share.com" 
                                 target="_blank" 
@@ -100,36 +108,21 @@ export function CompanyDetails() {
                             >
                                 www.talent-share.com
                             </a>{" "}
-                            which has a novel concept and provides unique services to clients.
+                            which provides unique services to clients.
                         </motion.p>
                         
-                        <motion.p
+                        <motion.div
                             variants={itemVariants}
-                            className="text-gray-600 leading-relaxed"
+                            className="pt-4"
                         >
-                            Immidi Infotech is providing technology solutions and IT staffing services to startups and fortune 500 companies. We are experienced in providing customized and tailored solutions and IT enabled services for your technology needs.
-                        </motion.p>
-                        
-                        <motion.p
-                            variants={itemVariants}
-                            className="text-gray-600 leading-relaxed"
-                        >
-                            Our goal of providing services takes places with our high quality workforce. We are client focused company with low cost operations. We understand your business requirements in dynamic business environment and provide suitable solutions.
-                        </motion.p>
-                        
-                        <motion.p
-                            variants={itemVariants}
-                            className="text-gray-600 leading-relaxed"
-                        >
-                            We provide customer centric, service oriented approach in providing services to our clients. Our team consists of range of professionals from project management, architecture, and development to support to satisfy all kinds of technology needs.
-                        </motion.p>
-                        
-                        <motion.p
-                            variants={itemVariants}
-                            className="text-gray-600 leading-relaxed"
-                        >
-                            Immidi Infotech considers people as human capital and provides continuous training to keep up the technology work force updated and up to the mark in IT industry. Our pools of professionals are well trained, experienced and capable of providing excellent service to our clients.
-                        </motion.p>
+                            <Link
+                                to="/company-details"
+                                className="inline-flex items-center space-x-2 text-[#00B483] hover:text-[#00B843] font-semibold transition-colors duration-200 group"
+                            >
+                                <span>Learn More</span>
+                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                            </Link>
+                        </motion.div>
                     </motion.div>
 
                     {/* Company Stats */}
