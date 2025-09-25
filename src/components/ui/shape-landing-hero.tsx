@@ -109,7 +109,7 @@ function HeroGeometric({
         <div className={cn(
             "relative min-h-screen w-full flex items-center justify-center overflow-hidden transition-colors duration-500",
             isLight 
-                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                ? "bg-white" 
                 : "bg-[#030303]"
         )}>
             <div className={cn(
@@ -259,7 +259,7 @@ function HeroGeometric({
             <div className={cn(
                 "absolute inset-0 pointer-events-none transition-opacity duration-500",
                 isLight 
-                    ? "bg-gradient-to-t from-[#D1FAE5] via-transparent to-[#F0FDF4]/80"
+                    ? "bg-gradient-to-t from-white/20 via-transparent to-white/10"
                     : "bg-gradient-to-t from-[#030303] via-transparent to-[#030303]/80"
             )} />
         </div>

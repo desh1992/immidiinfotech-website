@@ -91,7 +91,7 @@ export function CompanyDetailsPage() {
         <div className={cn(
             "min-h-screen transition-colors duration-500",
             isLight 
-                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                ? "bg-white" 
                 : "bg-[#030303]"
         )}>
             {/* Navigation Header */}

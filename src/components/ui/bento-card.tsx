@@ -35,7 +35,7 @@ const BentoCard: React.FC<BentoCardProps> = ({
 
   return (
     <motion.div
-      className="relative overflow-hidden h-full bg-background dark:bg-background/50 rounded-3xl"
+      className="relative overflow-hidden h-full bg-background dark:bg-background/50 rounded-3xl shadow-lg hover:shadow-xl transition-shadow duration-300"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5, delay }}

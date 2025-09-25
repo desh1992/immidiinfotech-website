@@ -15,6 +15,7 @@ import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+import CurvedLoop from "@/components/ui/curved-loop";
 
 export function InfrastructureService() {
     const { theme } = useTheme();
@@ -79,7 +80,7 @@ export function InfrastructureService() {
         <div className={cn(
             "min-h-screen transition-colors duration-500 overflow-x-hidden",
             isLight 
-                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                ? "bg-white" 
                 : "bg-[#030303]"
         )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
@@ -339,6 +340,35 @@ export function InfrastructureService() {
                                 </div>
                             </motion.div>
                         </div>
+                    </div>
+                </motion.div>
+
+                {/* Curved Loop Animation - Full Width */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    animate="visible"
+                    className="mt-20 mb-52"
+                    style={{ 
+                        width: '100vw', 
+                        marginLeft: 'calc(-50vw + 50%)',
+                        maxWidth: '100vw'
+                    }}
+                >
+                    <div className="relative w-full h-32">
+                        <CurvedLoop 
+                            marqueeText="Infrastructure ✦ Cloud Migration ✦ Security ✦ Excellence ✦"
+                            speed={1.5}
+                            curveAmount={250}
+                            direction="left"
+                            interactive={true}
+                            className={cn(
+                                "font-bold",
+                                isLight 
+                                    ? "text-gray-800" 
+                                    : "text-white"
+                            )}
+                        />
                     </div>
                 </motion.div>
 
