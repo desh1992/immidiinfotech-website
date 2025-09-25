@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 export function SoftwareDevelopmentService() {
     const { theme } = useTheme();
@@ -76,7 +77,7 @@ export function SoftwareDevelopmentService() {
 
     return (
         <div className={cn(
-            "min-h-screen transition-colors duration-500",
+            "min-h-screen transition-colors duration-500 overflow-x-hidden",
             isLight 
                 ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
                 : "bg-[#030303]"
@@ -101,106 +102,244 @@ export function SoftwareDevelopmentService() {
                     </Link>
                 </motion.div>
 
-                {/* Header */}
+                {/* Header with Banner Image */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-center mb-20"
+                    className="relative mb-20 overflow-hidden"
+                    style={{ 
+                        width: '100vw', 
+                        marginLeft: 'calc(-50vw + 50%)',
+                        maxWidth: '100vw'
+                    }}
                 >
-                    <motion.div
-                        variants={itemVariants}
-                        className={cn(
-                            "inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-8",
-                            "bg-gradient-to-br from-green-500 to-emerald-600 text-white shadow-lg"
-                        )}
-                    >
-                        <Code className="w-10 h-10" />
-                    </motion.div>
-                    
-                    <motion.h1
-                        variants={itemVariants}
-                        className={cn(
-                            "text-5xl md:text-6xl lg:text-7xl font-bold mb-6",
-                            isLight ? "text-gray-900" : "text-white"
-                        )}
-                    >
-                        Software Development & Support
-                    </motion.h1>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-xl font-semibold mb-6",
-                            "bg-gradient-to-r from-green-500 to-emerald-600 bg-clip-text text-transparent"
-                        )}
-                    >
-                        Custom Solutions That Exceed Expectations
-                    </motion.p>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-lg max-w-4xl mx-auto leading-relaxed",
-                            isLight ? "text-gray-700" : "text-gray-300"
-                        )}
-                    >
-                        End-to-end software development services with strict adherence to benchmarks and commitment to exceeding client expectations. We deliver innovative, scalable, and robust software solutions that drive business growth.
-                    </motion.p>
+                    {/* Background Image */}
+                    <div className="relative h-[300px] md:h-[350px] lg:h-[400px]">
+                        <img
+                            src="/sd.jpg"
+                            alt="Software Development & Support Services"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        
+                        {/* Dark Overlay for Better Text Readability */}
+                        <div className="absolute inset-0 bg-black/30"></div>
+                        
+                        {/* Progressive Blur Overlay */}
+                        <ProgressiveBlur
+                            direction="bottom"
+                            blurLayers={6}
+                            blurIntensity={2}
+                            className="absolute inset-0"
+                        />
+                        
+                        {/* Content Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center px-8 max-w-6xl">
+                                <motion.h1
+                                    variants={itemVariants}
+                                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+                                >
+                                    Software Development & Support
+                                </motion.h1>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-lg md:text-xl text-white/90 mb-6"
+                                >
+                                    Custom Solutions That Exceed Expectations
+                                </motion.p>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-base md:text-lg text-white/80 max-w-4xl mx-auto leading-relaxed"
+                                >
+                                    End-to-end software development services with strict adherence to benchmarks and commitment to exceeding client expectations. We deliver innovative, scalable, and robust software solutions that drive business growth.
+                                </motion.p>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
-                {/* Services Grid */}
+                {/* Services Bento Grid */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+                    className="mb-20"
                 >
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={index}
-                            variants={itemVariants}
-                            className={cn(
-                                "rounded-2xl p-8 transition-all duration-300 hover:shadow-xl group",
-                                isLight 
-                                    ? "bg-white border border-gray-200 hover:border-gray-300" 
-                                    : "bg-gray-800 border border-gray-700 hover:border-gray-600"
-                            )}
-                            whileHover={{ y: -5 }}
-                        >
-                            <div className="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <service.icon className="w-8 h-8 text-white" />
+                    <div className="flex flex-col gap-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                            {/* Left side - Text content */}
+                            <div className="lg:col-span-2">
+                                <p className="text-lg max-w-xl leading-relaxed tracking-tight text-gray-600 text-left">
+                                    End-to-end software development services with strict adherence to benchmarks and commitment to exceeding client expectations. We deliver innovative, scalable, and robust software solutions that drive business growth. Our team of experienced developers and engineers work closely with your organization to understand requirements, design optimal solutions, and implement cutting-edge technologies. From custom application development and complete SDLC implementation to quality assurance and testing, we provide comprehensive software development services that ensure your projects are delivered on time, within budget, and exceed your expectations.
+                                </p>
                             </div>
                             
-                            <h3 className={cn(
-                                "text-xl font-bold mb-4",
-                                isLight ? "text-gray-900" : "text-white"
-                            )}>
-                                {service.title}
-                            </h3>
-                            
-                            <p className={cn(
-                                "text-sm mb-6 leading-relaxed",
-                                isLight ? "text-gray-600" : "text-gray-400"
-                            )}>
-                                {service.description}
-                            </p>
-                            
-                            <div className="space-y-2">
-                                {service.features.map((feature, featureIndex) => (
-                                    <div key={featureIndex} className="flex items-center space-x-2">
-                                        <CheckCircle className="w-4 h-4 flex-shrink-0 text-green-500" />
-                                        <span className={cn(
-                                            "text-sm",
-                                            isLight ? "text-gray-700" : "text-gray-300"
-                                        )}>
-                                            {feature}
-                                        </span>
+                            {/* Right side - First bento card */}
+                            <div className="lg:col-span-1">
+                                <motion.div
+                                    variants={itemVariants}
+                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 p-6 flex justify-between flex-col h-full"
+                                >
+                                    <Monitor className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                    <div className="flex flex-col">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-4">Custom Application Development</h3>
+                                        <p className="text-gray-600 text-sm mb-4">
+                                            Tailored application development and seamless deployment across multiple platforms.
+                                        </p>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Web Applications</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Mobile Apps</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Desktop Solutions</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Cross-Platform Development</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                ))}
+                                </motion.div>
                             </div>
-                        </motion.div>
-                    ))}
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {/* Complete SDLC Implementation - Small Card (Top Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <Laptop className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Complete SDLC Implementation</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Comprehensive software development lifecycle management from planning to deployment.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Requirements Analysis</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">System Design</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Implementation</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Deployment & Maintenance</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Modern Technology Stack - Large Card (Top Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <Globe className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Modern Technology Stack</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Leveraging cutting-edge technologies and frameworks to build scalable, secure, and high-performance applications. We stay current with the latest trends and best practices to deliver solutions that meet modern standards.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Frontend Technologies</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Backend Frameworks</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Database Solutions</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Cloud Integration</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Quality Assurance & Testing - Large Card (Bottom Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <Shield className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Quality Assurance & Testing</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Comprehensive testing strategies to ensure software quality, reliability, and performance. We implement rigorous testing protocols throughout the development process to deliver bug-free, high-quality software solutions.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Automated Testing</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Performance Testing</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Security Testing</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">User Acceptance Testing</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Mobile Development - Small Card (Bottom Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <Smartphone className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Mobile Development</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Native and cross-platform mobile applications for iOS and Android platforms.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">iOS Development</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Android Development</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Cross-Platform Apps</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">App Store Deployment</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* Call to Action */}

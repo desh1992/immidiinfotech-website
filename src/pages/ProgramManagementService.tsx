@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 export function ProgramManagementService() {
     const { theme } = useTheme();
@@ -76,7 +77,7 @@ export function ProgramManagementService() {
 
     return (
         <div className={cn(
-            "min-h-screen transition-colors duration-500",
+            "min-h-screen transition-colors duration-500 overflow-x-hidden",
             isLight 
                 ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
                 : "bg-[#030303]"
@@ -101,106 +102,244 @@ export function ProgramManagementService() {
                     </Link>
                 </motion.div>
 
-                {/* Header */}
+                {/* Header with Banner Image */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-center mb-20"
+                    className="relative mb-20 overflow-hidden"
+                    style={{ 
+                        width: '100vw', 
+                        marginLeft: 'calc(-50vw + 50%)',
+                        maxWidth: '100vw'
+                    }}
                 >
-                    <motion.div
-                        variants={itemVariants}
-                        className={cn(
-                            "inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-8",
-                            "bg-gradient-to-br from-blue-500 to-cyan-600 text-white shadow-lg"
-                        )}
-                    >
-                        <Target className="w-10 h-10" />
-                    </motion.div>
-                    
-                    <motion.h1
-                        variants={itemVariants}
-                        className={cn(
-                            "text-5xl md:text-6xl lg:text-7xl font-bold mb-6",
-                            isLight ? "text-gray-900" : "text-white"
-                        )}
-                    >
-                        Program & Project Management
-                    </motion.h1>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-xl font-semibold mb-6",
-                            "bg-gradient-to-r from-blue-500 to-cyan-600 bg-clip-text text-transparent"
-                        )}
-                    >
-                        Strategic Excellence in Execution
-                    </motion.p>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-lg max-w-4xl mx-auto leading-relaxed",
-                            isLight ? "text-gray-700" : "text-gray-300"
-                        )}
-                    >
-                        Comprehensive program management services ensuring successful project delivery with proven methodologies and frameworks. We help organizations achieve their strategic objectives through effective planning, execution, and continuous improvement.
-                    </motion.p>
+                    {/* Background Image */}
+                    <div className="relative h-[300px] md:h-[350px] lg:h-[400px]">
+                        <img
+                            src="/pm.jpg"
+                            alt="Program & Project Management Services"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        
+                        {/* Dark Overlay for Better Text Readability */}
+                        <div className="absolute inset-0 bg-black/30"></div>
+                        
+                        {/* Progressive Blur Overlay */}
+                        <ProgressiveBlur
+                            direction="bottom"
+                            blurLayers={6}
+                            blurIntensity={2}
+                            className="absolute inset-0"
+                        />
+                        
+                        {/* Content Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center px-8 max-w-6xl">
+                                <motion.h1
+                                    variants={itemVariants}
+                                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+                                >
+                                    Program & Project Management
+                                </motion.h1>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-lg md:text-xl text-white/90 mb-6"
+                                >
+                                    Strategic Excellence in Execution
+                                </motion.p>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-base md:text-lg text-white/80 max-w-4xl mx-auto leading-relaxed"
+                                >
+                                    Comprehensive program management services ensuring successful project delivery with proven methodologies and frameworks. We help organizations achieve their strategic objectives through effective planning, execution, and continuous improvement.
+                                </motion.p>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
-                {/* Services Grid */}
+                {/* Services Bento Grid */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+                    className="mb-20"
                 >
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={index}
-                            variants={itemVariants}
-                            className={cn(
-                                "rounded-2xl p-8 transition-all duration-300 hover:shadow-xl group",
-                                isLight 
-                                    ? "bg-white border border-gray-200 hover:border-gray-300" 
-                                    : "bg-gray-800 border border-gray-700 hover:border-gray-600"
-                            )}
-                            whileHover={{ y: -5 }}
-                        >
-                            <div className="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <service.icon className="w-8 h-8 text-white" />
+                    <div className="flex flex-col gap-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                            {/* Left side - Text content */}
+                            <div className="lg:col-span-2">
+                                <p className="text-lg max-w-xl leading-relaxed tracking-tight text-gray-600 text-left">
+                                    Comprehensive program management services ensuring successful project delivery with proven methodologies and frameworks. We help organizations achieve their strategic objectives through effective planning, execution, and continuous improvement. Our team of certified project management professionals works closely with your organization to implement best practices, optimize processes, and deliver projects on time and within budget. From strategic planning and resource allocation to risk management and stakeholder engagement, we provide end-to-end program management solutions that drive success and enable sustainable growth.
+                                </p>
                             </div>
                             
-                            <h3 className={cn(
-                                "text-xl font-bold mb-4",
-                                isLight ? "text-gray-900" : "text-white"
-                            )}>
-                                {service.title}
-                            </h3>
-                            
-                            <p className={cn(
-                                "text-sm mb-6 leading-relaxed",
-                                isLight ? "text-gray-600" : "text-gray-400"
-                            )}>
-                                {service.description}
-                            </p>
-                            
-                            <div className="space-y-2">
-                                {service.features.map((feature, featureIndex) => (
-                                    <div key={featureIndex} className="flex items-center space-x-2">
-                                        <CheckCircle className="w-4 h-4 flex-shrink-0 text-green-500" />
-                                        <span className={cn(
-                                            "text-sm",
-                                            isLight ? "text-gray-700" : "text-gray-300"
-                                        )}>
-                                            {feature}
-                                        </span>
+                            {/* Right side - First bento card */}
+                            <div className="lg:col-span-1">
+                                <motion.div
+                                    variants={itemVariants}
+                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 p-6 flex justify-between flex-col h-full"
+                                >
+                                    <Calendar className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                    <div className="flex flex-col">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-4">Program Planning and Execution</h3>
+                                        <p className="text-gray-600 text-sm mb-4">
+                                            Strategic program planning with comprehensive execution frameworks for successful delivery.
+                                        </p>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Strategic Planning</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Resource Allocation</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Timeline Management</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Risk Assessment</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                ))}
+                                </motion.div>
                             </div>
-                        </motion.div>
-                    ))}
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {/* Framework Implementation - Small Card (Top Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <FileText className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Framework Implementation</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Implementing proven frameworks and approaches to develop effective strategies.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Agile/Scrum Implementation</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">PMBOK Standards</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">PRINCE2 Methodology</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Custom Framework Development</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Process Development - Large Card (Top Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <Users className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Process Development</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Develop and enforce project management practices and standardized processes. We create comprehensive process documentation, establish quality standards, ensure compliance management, and implement best practices across your organization.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Process Documentation</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Quality Standards</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Compliance Management</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Best Practices Implementation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Project Monitoring - Large Card (Bottom Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <TrendingUp className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Project Monitoring</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Review, monitor, and manage projects with comprehensive resource management. We provide real-time progress tracking, performance metrics analysis, resource optimization, and effective stakeholder management to ensure project success.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Progress Tracking</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Performance Metrics</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Resource Optimization</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Stakeholder Management</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Continuous Improvement - Small Card (Bottom Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <Award className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Continuous Improvement</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Ongoing enhancement of practices and processes for optimal performance.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Process Optimization</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Lessons Learned</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Knowledge Management</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Innovation Integration</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* Call to Action */}

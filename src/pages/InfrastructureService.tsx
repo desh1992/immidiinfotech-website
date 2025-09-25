@@ -14,6 +14,7 @@ import {
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 import { Link } from "react-router-dom";
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
 export function InfrastructureService() {
     const { theme } = useTheme();
@@ -76,7 +77,7 @@ export function InfrastructureService() {
 
     return (
         <div className={cn(
-            "min-h-screen transition-colors duration-500",
+            "min-h-screen transition-colors duration-500 overflow-x-hidden",
             isLight 
                 ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
                 : "bg-[#030303]"
@@ -101,106 +102,244 @@ export function InfrastructureService() {
                     </Link>
                 </motion.div>
 
-                {/* Header */}
+                {/* Header with Banner Image */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="text-center mb-20"
+                    className="relative mb-20 overflow-hidden"
+                    style={{ 
+                        width: '100vw', 
+                        marginLeft: 'calc(-50vw + 50%)',
+                        maxWidth: '100vw'
+                    }}
                 >
-                    <motion.div
-                        variants={itemVariants}
-                        className={cn(
-                            "inline-flex items-center justify-center w-20 h-20 rounded-3xl mb-8",
-                            "bg-gradient-to-br from-orange-500 to-red-600 text-white shadow-lg"
-                        )}
-                    >
-                        <Cloud className="w-10 h-10" />
-                    </motion.div>
-                    
-                    <motion.h1
-                        variants={itemVariants}
-                        className={cn(
-                            "text-5xl md:text-6xl lg:text-7xl font-bold mb-6",
-                            isLight ? "text-gray-900" : "text-white"
-                        )}
-                    >
-                        Infrastructure Transformation & Management
-                    </motion.h1>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-xl font-semibold mb-6",
-                            "bg-gradient-to-r from-orange-500 to-red-600 bg-clip-text text-transparent"
-                        )}
-                    >
-                        Enterprise-Grade Systems & Security
-                    </motion.p>
-                    
-                    <motion.p
-                        variants={itemVariants}
-                        className={cn(
-                            "text-lg max-w-4xl mx-auto leading-relaxed",
-                            isLight ? "text-gray-700" : "text-gray-300"
-                        )}
-                    >
-                        Comprehensive infrastructure transformation with focus on cloud migration, security implementation, and enterprise-grade standards. We help organizations modernize their infrastructure for scalability, security, and performance.
-                    </motion.p>
+                    {/* Background Image */}
+                    <div className="relative h-[300px] md:h-[350px] lg:h-[400px]">
+                        <img
+                            src="/infra.jpg"
+                            alt="Infrastructure Transformation & Management Services"
+                            className="absolute inset-0 w-full h-full object-cover"
+                        />
+                        
+                        {/* Dark Overlay for Better Text Readability */}
+                        <div className="absolute inset-0 bg-black/30"></div>
+                        
+                        {/* Progressive Blur Overlay */}
+                        <ProgressiveBlur
+                            direction="bottom"
+                            blurLayers={6}
+                            blurIntensity={2}
+                            className="absolute inset-0"
+                        />
+                        
+                        {/* Content Overlay */}
+                        <div className="absolute inset-0 flex items-center justify-center">
+                            <div className="text-center px-8 max-w-6xl">
+                                <motion.h1
+                                    variants={itemVariants}
+                                    className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white"
+                                >
+                                    Infrastructure Transformation & Management
+                                </motion.h1>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-lg md:text-xl text-white/90 mb-6"
+                                >
+                                    Enterprise-Grade Systems & Security
+                                </motion.p>
+                                <motion.p
+                                    variants={itemVariants}
+                                    className="text-base md:text-lg text-white/80 max-w-4xl mx-auto leading-relaxed"
+                                >
+                                    Comprehensive infrastructure transformation with focus on cloud migration, security implementation, and enterprise-grade standards. We help organizations modernize their infrastructure for scalability, security, and performance.
+                                </motion.p>
+                            </div>
+                        </div>
+                    </div>
                 </motion.div>
 
-                {/* Services Grid */}
+                {/* Services Bento Grid */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20"
+                    className="mb-20"
                 >
-                    {services.map((service, index) => (
-                        <motion.div
-                            key={index}
-                            variants={itemVariants}
-                            className={cn(
-                                "rounded-2xl p-8 transition-all duration-300 hover:shadow-xl group",
-                                isLight 
-                                    ? "bg-white border border-gray-200 hover:border-gray-300" 
-                                    : "bg-gray-800 border border-gray-700 hover:border-gray-600"
-                            )}
-                            whileHover={{ y: -5 }}
-                        >
-                            <div className="w-16 h-16 bg-gradient-to-br from-orange-500 to-red-600 rounded-xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300">
-                                <service.icon className="w-8 h-8 text-white" />
+                    <div className="flex flex-col gap-10">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+                            {/* Left side - Text content */}
+                            <div className="lg:col-span-2">
+                                <p className="text-lg max-w-xl leading-relaxed tracking-tight text-gray-600 text-left">
+                                    Comprehensive infrastructure transformation with focus on cloud migration, security implementation, and enterprise-grade standards. We help organizations modernize their infrastructure for scalability, security, and performance. Our team of experienced infrastructure architects and engineers work closely with your organization to design, implement, and manage robust IT infrastructure solutions. From cloud migration and application lifecycle management to security implementation and enterprise architecture, we provide end-to-end infrastructure services that ensure your systems are secure, scalable, and optimized for business success.
+                                </p>
                             </div>
                             
-                            <h3 className={cn(
-                                "text-xl font-bold mb-4",
-                                isLight ? "text-gray-900" : "text-white"
-                            )}>
-                                {service.title}
-                            </h3>
-                            
-                            <p className={cn(
-                                "text-sm mb-6 leading-relaxed",
-                                isLight ? "text-gray-600" : "text-gray-400"
-                            )}>
-                                {service.description}
-                            </p>
-                            
-                            <div className="space-y-2">
-                                {service.features.map((feature, featureIndex) => (
-                                    <div key={featureIndex} className="flex items-center space-x-2">
-                                        <CheckCircle className="w-4 h-4 flex-shrink-0 text-green-500" />
-                                        <span className={cn(
-                                            "text-sm",
-                                            isLight ? "text-gray-700" : "text-gray-300"
-                                        )}>
-                                            {feature}
-                                        </span>
+                            {/* Right side - First bento card */}
+                            <div className="lg:col-span-1">
+                                <motion.div
+                                    variants={itemVariants}
+                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 p-6 flex justify-between flex-col h-full"
+                                >
+                                    <Cloud className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                    <div className="flex flex-col">
+                                        <h3 className="text-xl font-bold text-gray-900 mb-4">Cloud Migration & Transformation</h3>
+                                        <p className="text-gray-600 text-sm mb-4">
+                                            Infrastructure migration to cloud with complete application transformation.
+                                        </p>
+                                        <div className="space-y-2">
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">AWS/Azure/GCP Migration</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Application Modernization</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Hybrid Cloud Solutions</span>
+                                            </div>
+                                            <div className="flex items-center space-x-2">
+                                                <CheckCircle className="w-3 h-3 text-green-500" />
+                                                <span className="text-xs text-gray-600">Cost Optimization</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                ))}
+                                </motion.div>
                             </div>
-                        </motion.div>
-                    ))}
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                            {/* Application Lifecycle Management - Small Card (Top Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <GitBranch className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Application Lifecycle Management</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Complete application lifecycle management from development to deployment.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">DevOps Implementation</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">CI/CD Pipelines</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Version Control</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Automated Deployment</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Security Implementation - Large Card (Top Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <Shield className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Security Implementation</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Comprehensive security solutions to protect your infrastructure and data. We implement multi-layered security measures including network security, access controls, encryption, and compliance frameworks to ensure your systems meet enterprise security standards.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Network Security</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Access Controls</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Encryption</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Compliance Frameworks</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Enterprise Architecture - Large Card (Bottom Left) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
+                            >
+                                <Server className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-2xl font-bold text-gray-900 mb-4">Enterprise Architecture</h3>
+                                    <p className="text-gray-600 max-w-md text-base mb-6">
+                                        Strategic enterprise architecture design and implementation to align IT infrastructure with business objectives. We create scalable, maintainable, and future-proof architecture solutions that support organizational growth and digital transformation initiatives.
+                                    </p>
+                                    <div className="grid grid-cols-2 gap-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Architecture Design</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Technology Roadmaps</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Integration Solutions</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-4 h-4 text-green-500" />
+                                            <span className="text-sm text-gray-600">Digital Transformation</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+
+                            {/* Database Management - Small Card (Bottom Right) */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
+                            >
+                                <Database className="w-8 h-8 stroke-1 text-[#00B483]" />
+                                <div className="flex flex-col">
+                                    <h3 className="text-xl font-bold text-gray-900 mb-4">Database Management</h3>
+                                    <p className="text-gray-600 text-sm mb-4">
+                                        Comprehensive database administration and optimization services.
+                                    </p>
+                                    <div className="space-y-2">
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Database Administration</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Performance Optimization</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Backup & Recovery</span>
+                                        </div>
+                                        <div className="flex items-center space-x-2">
+                                            <CheckCircle className="w-3 h-3 text-green-500" />
+                                            <span className="text-xs text-gray-600">Data Migration</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </div>
                 </motion.div>
 
                 {/* Call to Action */}
