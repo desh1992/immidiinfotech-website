@@ -50,7 +50,7 @@ export function TalentShare() {
         <section id="talent-share" className={cn(
             "py-20 transition-colors duration-500",
             isLight 
-                ? "bg-gradient-to-br from-[#F0FDF4] via-[#ECFDF5] to-[#D1FAE5]" 
+                ? "bg-white" 
                 : "bg-[#030303]"
         )}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
