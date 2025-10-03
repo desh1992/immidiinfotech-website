@@ -1,20 +1,26 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Phone, MapPin } from "lucide-react";
+import { Mail, Phone, MapPin, Building, Loader2, CheckCircle, AlertCircle } from "lucide-react";
 import { useState } from "react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
+import { AdvancedMap } from "./ui/interactive-map";
+import { sendContactEmail, ContactFormData } from "@/lib/emailjs";
 
 export function Contact() {
     const { theme } = useTheme();
     const isLight = theme === 'light';
     
-    const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState<ContactFormData>({
         name: "",
         email: "",
+        subject: "",
         message: ""
     });
+
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         const { name, value } = e.target;
@@ -24,26 +30,44 @@ export function Contact() {
         }));
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        // Handle form submission here
-        console.log("Form submitted:", formData);
-        // Reset form
-        setFormData({ name: "", email: "", message: "" });
+        setIsSubmitting(true);
+        setSubmitStatus('idle');
+
+        try {
+            const success = await sendContactEmail(formData);
+            if (success) {
+                setSubmitStatus('success');
+                setFormData({ name: "", email: "", subject: "", message: "" });
+            } else {
+                setSubmitStatus('error');
+            }
+        } catch (error) {
+            console.error('Form submission error:', error);
+            setSubmitStatus('error');
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
     const contactMethods = [
         {
-            icon: Mail,
-            text: "info@immidiinfotech.com"
+            icon: MapPin,
+            text: "702 Russell Ave, Suite #470C",
+            subtext: "Gaithersburg MD 20877, United States of America"
         },
         {
             icon: Phone,
-            text: "Contact us for details"
+            text: "1-510-280-7669 (Phone)"
         },
         {
-            icon: MapPin,
-            text: "Global IT Solutions Provider"
+            icon: Phone,
+            text: "1-510-280-3693 (Fax)"
+        },
+        {
+            icon: Mail,
+            text: "contact@immidiinfotech.com"
         }
     ];
 
@@ -122,14 +146,21 @@ export function Contact() {
                                 <motion.div
                                     key={index}
                                     variants={itemVariants}
-                                    className="flex items-center space-x-4"
+                                    className="flex items-start space-x-4"
                                 >
-                                    <div className="w-12 h-12 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center">
+                                    <div className="w-12 h-12 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center flex-shrink-0">
                                         <method.icon className="w-6 h-6 text-white" />
                                     </div>
-                                    <span className="text-gray-700 font-medium">
-                                        {method.text}
-                                    </span>
+                                    <div>
+                                        <span className="text-gray-700 font-medium block">
+                                            {method.text}
+                                        </span>
+                                        {method.subtext && (
+                                            <span className="text-gray-500 text-sm block">
+                                                {method.subtext}
+                                            </span>
+                                        )}
+                                    </div>
                                 </motion.div>
                             ))}
                         </motion.div>
@@ -173,6 +204,18 @@ export function Contact() {
                                 </div>
                                 
                                 <div>
+                                    <input
+                                        type="text"
+                                        name="subject"
+                                        placeholder="Subject"
+                                        value={formData.subject}
+                                        onChange={handleInputChange}
+                                        required
+                                        className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#00B483] focus:border-transparent transition-all duration-200"
+                                    />
+                                </div>
+                                
+                                <div>
                                     <textarea
                                         name="message"
                                         placeholder="Your Message"
@@ -186,16 +229,178 @@ export function Contact() {
                                 
                                 <motion.button
                                     type="submit"
-                                    className="w-full bg-gradient-to-r from-[#00B483] to-[#00B843] text-white py-3 rounded-lg font-semibold hover:shadow-lg transition-all duration-300"
-                                    whileHover={{ scale: 1.02 }}
-                                    whileTap={{ scale: 0.98 }}
+                                    disabled={isSubmitting}
+                                    className={cn(
+                                        "w-full py-3 rounded-lg font-semibold transition-all duration-300 flex items-center justify-center space-x-2",
+                                        isSubmitting 
+                                            ? "bg-gray-400 cursor-not-allowed" 
+                                            : "bg-gradient-to-r from-[#00B483] to-[#00B843] text-white hover:shadow-lg"
+                                    )}
+                                    whileHover={!isSubmitting ? { scale: 1.02 } : {}}
+                                    whileTap={!isSubmitting ? { scale: 0.98 } : {}}
                                 >
-                                    Send Message
+                                    {isSubmitting ? (
+                                        <>
+                                            <Loader2 className="w-5 h-5 animate-spin" />
+                                            <span>Sending...</span>
+                                        </>
+                                    ) : (
+                                        <span>Send Message</span>
+                                    )}
                                 </motion.button>
+
+                                {/* Status Messages */}
+                                {submitStatus === 'success' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="flex items-center space-x-2 text-green-600 bg-green-50 p-3 rounded-lg"
+                                    >
+                                        <CheckCircle className="w-5 h-5" />
+                                        <span>Message sent successfully! We'll get back to you soon.</span>
+                                    </motion.div>
+                                )}
+
+                                {submitStatus === 'error' && (
+                                    <motion.div
+                                        initial={{ opacity: 0, y: 10 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        className="flex items-center space-x-2 text-red-600 bg-red-50 p-3 rounded-lg"
+                                    >
+                                        <AlertCircle className="w-5 h-5" />
+                                        <span>Failed to send message. Please try again or contact us directly.</span>
+                                    </motion.div>
+                                )}
                             </div>
                         </motion.form>
                     </motion.div>
                 </div>
+
+                {/* Building Image and Location Details */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="mt-20"
+                >
+                    <motion.div
+                        variants={itemVariants}
+                        className="bg-white rounded-2xl p-8 shadow-lg"
+                    >
+                        <div className="flex items-center space-x-4 mb-6">
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center">
+                                <Building className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900">Our Office Location</h3>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                            {/* Building Image */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="relative rounded-xl shadow-lg overflow-hidden"
+                            >
+                                <img 
+                                    src="/Office-Pic.jpg" 
+                                    alt="Immidi Infotech Office Building"
+                                    className="w-full h-auto object-cover rounded-xl"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent rounded-xl"></div>
+                            </motion.div>
+
+                            {/* Location Details */}
+                            <motion.div
+                                variants={itemVariants}
+                                className="space-y-4"
+                            >
+                                <div className="flex items-start space-x-4">
+                                    <MapPin className="w-6 h-6 text-[#00B483] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-900 mb-1">Address</h4>
+                                        <p className="text-gray-600">
+                                            702 Russell Ave, Suite #470C<br />
+                                            Gaithersburg MD 20877<br />
+                                            United States of America
+                                        </p>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-start space-x-4">
+                                    <Phone className="w-6 h-6 text-[#00B483] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-900 mb-1">Phone</h4>
+                                        <p className="text-gray-600">1-510-280-7669</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-start space-x-4">
+                                    <Phone className="w-6 h-6 text-[#00B483] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-900 mb-1">Fax</h4>
+                                        <p className="text-gray-600">1-510-280-3693</p>
+                                    </div>
+                                </div>
+                                
+                                <div className="flex items-start space-x-4">
+                                    <Mail className="w-6 h-6 text-[#00B483] mt-1 flex-shrink-0" />
+                                    <div>
+                                        <h4 className="text-lg font-semibold text-gray-900 mb-1">Email</h4>
+                                        <p className="text-gray-600">contact@immidiinfotech.com</p>
+                                    </div>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </motion.div>
+                </motion.div>
+
+                {/* Interactive Map */}
+                <motion.div
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true, margin: "-100px" }}
+                    className="mt-12"
+                >
+                    <motion.div
+                        variants={itemVariants}
+                        className="bg-white rounded-2xl p-8 shadow-lg"
+                    >
+                        <div className="flex items-center space-x-4 mb-6">
+                            <div className="w-12 h-12 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-xl flex items-center justify-center">
+                                <MapPin className="w-6 h-6 text-white" />
+                            </div>
+                            <h3 className="text-2xl font-bold text-gray-900">Find Us on Map</h3>
+                        </div>
+                        
+                        <motion.div
+                            variants={itemVariants}
+                            className="rounded-xl overflow-hidden shadow-lg"
+                            style={{ height: '500px' }}
+                        >
+                            <AdvancedMap
+                                center={[39.15064535100687, -77.2070067950877]} // Exact coordinates for 702 Russell Ave, Gaithersburg, MD
+                                zoom={16}
+                                markers={[
+                                    {
+                                        id: 1,
+                                        position: [39.15064535100687, -77.2070067950877],
+                                        color: 'blue',
+                                        size: 'large',
+                                        popup: {
+                                            title: 'Immidi Infotech',
+                                            content: '702 Russell Ave, Suite #470C<br/>Gaithersburg MD 20877<br/>United States of America'
+                                        }
+                                    }
+                                ]}
+                                enableClustering={false}
+                                enableSearch={true}
+                                enableControls={true}
+                                style={{ height: '100%', width: '100%' }}
+                            />
+                        </motion.div>
+                    </motion.div>
+                </motion.div>
             </div>
         </section>
     );

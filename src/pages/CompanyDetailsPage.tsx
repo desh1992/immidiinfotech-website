@@ -12,6 +12,16 @@ export function CompanyDetailsPage() {
     const { theme } = useTheme();
     const isLight = theme === 'light';
 
+    // Download functionality
+    const handleDownload = (filename: string) => {
+        const link = document.createElement('a');
+        link.href = `/${filename}`;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    };
+
 
     const companyDetails = [
         { label: "Federal ID", value: "27-2221769" },
@@ -58,12 +68,6 @@ export function CompanyDetailsPage() {
         }
     ];
 
-    const lcaApplications = [
-        { id: "026007", title: "LCA Application 026007" },
-        { id: "026010", title: "LCA Application 026010" },
-        { id: "247018", title: "LCA Application 247018" },
-        { id: "347560", title: "LCA Application 347560" }
-    ];
 
     const containerVariants = {
         hidden: { opacity: 0 },
@@ -265,6 +269,7 @@ export function CompanyDetailsPage() {
                                             Download our comprehensive capability statement to learn about our services, expertise, and track record.
                                         </p>
                                         <motion.button 
+                                            onClick={() => handleDownload('IITECH_Capability Statement.pdf')}
                                             className="bg-[#00B483] text-white hover:bg-[#00B843] px-8 py-4 rounded-xl font-semibold transition-colors duration-300 inline-flex items-center space-x-3 shadow-lg hover:shadow-xl w-fit"
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
@@ -287,6 +292,7 @@ export function CompanyDetailsPage() {
                                             Download our mission and company overview brochure.
                                         </p>
                                         <motion.button 
+                                            onClick={() => handleDownload('Talent-Share Brochure.pdf')}
                                             className="bg-[#00B483] text-white hover:bg-[#00B843] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center space-x-2 shadow-lg hover:shadow-xl w-fit"
                                             whileHover={{ scale: 1.05 }}
                                             whileTap={{ scale: 0.95 }}
@@ -300,118 +306,6 @@ export function CompanyDetailsPage() {
                         </div>
                     </motion.div>
 
-                    {/* Active Labor Applications - Bento Grid Style */}
-                    <motion.div
-                        variants={containerVariants}
-                        initial="hidden"
-                        animate="visible"
-                        className="mb-20"
-                    >
-                        <div className="flex flex-col gap-10">
-                            {/* Header Section */}
-                            <div className="flex gap-4 flex-col items-start">
-                                <div className="flex gap-2 flex-col">
-                                    <h2 className="text-3xl md:text-5xl tracking-tighter max-w-xl font-regular text-left text-gray-900">
-                                        Active Labor Condition Applications
-                                    </h2>
-                                    <p className="text-lg max-w-xl lg:max-w-lg leading-relaxed tracking-tight text-gray-600 text-left">
-                                        Access our active labor condition applications for compliance and transparency.
-                                    </p>
-                                </div>
-                            </div>
-                            
-                            {/* Bento Grid Layout */}
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                                {/* LCA Application 1 - Large Card (spans 2 columns) */}
-                                <motion.div
-                                    variants={itemVariants}
-                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
-                                >
-                                    <FileText className="w-8 h-8 stroke-1 text-[#00B483]" />
-                                    <div className="flex flex-col">
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{lcaApplications[0]?.title}</h3>
-                                        <p className="text-gray-600 max-w-md text-base mb-6">
-                                            Active labor condition application for compliance with federal regulations and fair employment practices.
-                                        </p>
-                                        <motion.button 
-                                            className="bg-[#00B483] text-white hover:bg-[#00B843] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center space-x-2 shadow-lg hover:shadow-xl w-fit"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </motion.button>
-                                    </div>
-                                </motion.div>
-
-                                {/* LCA Application 2 - Small Card */}
-                                <motion.div
-                                    variants={itemVariants}
-                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
-                                >
-                                    <FileText className="w-8 h-8 stroke-1 text-[#00B483]" />
-                                    <div className="flex flex-col">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-4">{lcaApplications[1]?.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-4">
-                                            Active labor condition application for compliance.
-                                        </p>
-                                        <motion.button 
-                                            className="bg-[#00B483] text-white hover:bg-[#00B843] px-4 py-2 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl w-fit"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </motion.button>
-                                    </div>
-                                </motion.div>
-
-                                {/* LCA Application 3 - Small Card */}
-                                <motion.div
-                                    variants={itemVariants}
-                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 aspect-square p-6 flex justify-between flex-col"
-                                >
-                                    <FileText className="w-8 h-8 stroke-1 text-[#00B483]" />
-                                    <div className="flex flex-col">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-4">{lcaApplications[2]?.title}</h3>
-                                        <p className="text-gray-600 text-sm mb-4">
-                                            Active labor condition application for compliance.
-                                        </p>
-                                        <motion.button 
-                                            className="bg-[#00B483] text-white hover:bg-[#00B843] px-4 py-2 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl w-fit"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </motion.button>
-                                    </div>
-                                </motion.div>
-
-                                {/* LCA Application 4 - Large Card (spans 2 columns) */}
-                                <motion.div
-                                    variants={itemVariants}
-                                    className="bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 border border-gray-100 h-full lg:col-span-2 p-8 aspect-square lg:aspect-auto flex justify-between flex-col"
-                                >
-                                    <FileText className="w-8 h-8 stroke-1 text-[#00B483]" />
-                                    <div className="flex flex-col">
-                                        <h3 className="text-2xl font-bold text-gray-900 mb-4">{lcaApplications[3]?.title}</h3>
-                                        <p className="text-gray-600 max-w-md text-base mb-6">
-                                            Active labor condition application for compliance with federal regulations and fair employment practices.
-                                        </p>
-                                        <motion.button 
-                                            className="bg-[#00B483] text-white hover:bg-[#00B843] px-6 py-3 rounded-lg font-semibold transition-colors duration-300 inline-flex items-center space-x-2 shadow-lg hover:shadow-xl w-fit"
-                                            whileHover={{ scale: 1.05 }}
-                                            whileTap={{ scale: 0.95 }}
-                                        >
-                                            <Download className="w-4 h-4" />
-                                            <span>Download</span>
-                                        </motion.button>
-                                    </div>
-                                </motion.div>
-                            </div>
-                        </div>
-                    </motion.div>
                 </div>
             </section>
         </div>

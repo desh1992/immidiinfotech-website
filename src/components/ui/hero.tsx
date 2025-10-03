@@ -100,10 +100,7 @@ export default function ImmidiInfotechHero() {
           transition={{ type: "spring", stiffness: 400, damping: 10 }}
         >
           <motion.div
-            className="w-10 h-10 bg-gradient-to-br from-[#00B483] to-[#00B843] rounded-lg flex items-center justify-center group-hover:drop-shadow-lg transition-all duration-300"
-            style={{
-              filter: "url(#logo-glow)",
-            }}
+            className="w-10 h-10 rounded-lg flex items-center justify-center group-hover:drop-shadow-lg transition-all duration-300"
             whileHover={{
               rotate: [0, -2, 2, 0],
               transition: {
@@ -111,22 +108,11 @@ export default function ImmidiInfotechHero() {
               },
             }}
           >
-            <motion.svg
-              fill="white"
-              viewBox="0 0 24 24"
-              xmlns="http://www.w3.org/2000/svg"
-              aria-hidden="true"
-              className="w-6 h-6"
-            >
-              <motion.path
-                d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"
-                initial={{ pathLength: 1 }}
-                whileHover={{
-                  pathLength: [1, 0, 1],
-                  transition: { duration: 1.2, ease: "easeInOut" },
-                }}
-              />
-            </motion.svg>
+            <img 
+              src="/immidi-logo.png" 
+              alt="Immidi Infotech Logo" 
+              className="w-full h-full object-contain"
+            />
           </motion.div>
           <span className="ml-3 text-white font-bold text-lg">Immidi Infotech</span>
 
@@ -268,7 +254,7 @@ export default function ImmidiInfotechHero() {
             transition={{ duration: 0.6, delay: 1.0 }}
           >
             <motion.button
-              className="px-10 py-4 rounded-full bg-transparent border-2 border-white/30 text-white font-medium text-sm transition-all duration-300 hover:bg-white/10 hover:border-[#00B483]/50 hover:text-[#00B483] cursor-pointer backdrop-blur-sm"
+              className="px-10 py-4 rounded-full bg-transparent border-2 border-white/30 text-white font-medium text-base transition-all duration-300 hover:bg-white/10 hover:border-[#00B483]/50 hover:text-[#00B483] cursor-pointer backdrop-blur-sm"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
             >

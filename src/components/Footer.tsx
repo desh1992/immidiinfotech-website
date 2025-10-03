@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Linkedin, Twitter, Facebook } from "lucide-react";
+import { Linkedin, Twitter, Facebook, Instagram } from "lucide-react";
 import { useTheme } from "@/contexts/ThemeContext";
 import { cn } from "@/lib/utils";
 
@@ -9,24 +9,45 @@ export function Footer() {
     const { theme } = useTheme();
     const isLight = theme === 'light';
     const footerLinks = [
-        { id: "home", label: "Home" },
-        { id: "services", label: "Services" },
-        { id: "careers", label: "Careers" },
-        { id: "company", label: "Company" },
-        { id: "talent-share", label: "Talent-Share" },
-        { id: "contact", label: "Contact" }
+        { id: "home", label: "Home", path: "/" },
+        { id: "services", label: "Services", path: "/#services" },
+        { id: "careers", label: "Careers", path: "/careers" },
+        { id: "company", label: "Company", path: "/company-details" },
+        { id: "talent-share", label: "Talent-Share", path: "/talent-share-details" },
+        { id: "contact", label: "Contact", path: "/#contact" }
     ];
 
     const socialLinks = [
-        { icon: Linkedin, href: "#", label: "LinkedIn" },
-        { icon: Twitter, href: "#", label: "Twitter" },
-        { icon: Facebook, href: "#", label: "Facebook" }
+        { icon: Linkedin, href: "https://www.linkedin.com/company/immidi-infotech/?viewAsMember=true", label: "LinkedIn" },
+        { icon: Twitter, href: "https://twitter.com/immidiinfotech", label: "Twitter" },
+        { icon: Facebook, href: "https://www.facebook.com/immidiinfotech", label: "Facebook" },
+        { icon: Instagram, href: "https://www.instagram.com/immidiinfotech/", label: "Instagram" }
     ];
 
-    const scrollToSection = (sectionId: string) => {
-        const element = document.getElementById(sectionId);
-        if (element) {
-            element.scrollIntoView({ behavior: 'smooth' });
+    const handleNavigation = (link: any) => {
+        if (link.path.startsWith('/#')) {
+            // Handle section scrolling (only for contact)
+            const sectionId = link.path.substring(2); // Remove '/#'
+            if (window.location.pathname === '/') {
+                // We're on home page, just scroll
+                const element = document.getElementById(sectionId);
+                if (element) {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                // We're on a different page, navigate to home first then scroll
+                window.location.href = `/#${sectionId}`;
+            }
+        } else if (link.path === '/') {
+            // Handle home navigation
+            if (window.location.pathname === '/') {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            } else {
+                window.location.href = '/';
+            }
+        } else {
+            // Handle other routes normally - navigate directly to pages
+            window.location.href = link.path;
         }
     };
 
@@ -70,18 +91,12 @@ export function Footer() {
                         variants={itemVariants}
                         className="flex items-center space-x-3"
                     >
-                        <div className="w-10 h-10 bg-[#00B483] rounded-lg flex items-center justify-center">
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect x="4" y="4" width="16" height="16" rx="2" fill="white" />
-                                <rect x="6" y="6" width="12" height="8" rx="1" fill="#00B483" />
-                                <rect x="6" y="10" width="12" height="4" rx="1" fill="#00B483" />
-                            </svg>
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                            <img 
+                                src="/immidi-logo.png" 
+                                alt="Immidi Infotech Logo" 
+                                className="w-full h-full object-contain"
+                            />
                         </div>
                         <span className="text-xl font-bold">Immidi Infotech</span>
                     </motion.div>
@@ -94,7 +109,7 @@ export function Footer() {
                         {footerLinks.map((link) => (
                             <motion.button
                                 key={link.id}
-                                onClick={() => scrollToSection(link.id)}
+                                onClick={() => handleNavigation(link)}
                                 className="text-gray-300 hover:text-white transition-colors duration-200"
                                 whileHover={{ y: -2 }}
                                 transition={{ type: "spring", stiffness: 400, damping: 10 }}

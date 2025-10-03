@@ -100,10 +100,10 @@ export function TalentShare() {
                         >
                             <Link
                                 to="/talent-share-details"
-                                className="inline-flex items-center space-x-2 text-[#00B483] hover:text-[#00B843] font-semibold transition-colors duration-200 group"
+                                className="inline-flex items-center space-x-2 text-[#00B483] hover:text-[#00B843] font-semibold transition-colors duration-200 group text-lg"
                             >
                                 <span>Learn More</span>
-                                <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-200" />
+                                <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform duration-200" />
                             </Link>
                         </motion.div>
                     </motion.div>

@@ -6,6 +6,7 @@ import { WhyChooseUs } from './components/WhyChooseUs'
 import { ServicesCards } from './components/ServicesCards'
 import { CompanyDetails } from './components/CompanyDetails'
 import { TalentShare } from './components/TalentShare'
+import { Careers } from './components/Careers'
 import { Contact } from './components/Contact'
 import { Footer } from './components/Footer'
 import { AIMLService } from './pages/AIMLService'
@@ -16,6 +17,8 @@ import { DataAnalyticsService } from './pages/DataAnalyticsService'
 import { CenterExcellenceService } from './pages/CenterExcellenceService'
 import { CompanyDetailsPage } from './pages/CompanyDetailsPage'
 import { TalentShareDetailsPage } from './pages/TalentShareDetailsPage'
+import { CareersPage } from './pages/CareersPage'
+import { ScrollToTop } from './components/ScrollToTop'
 
 function HomePage() {
   return (
@@ -31,6 +34,7 @@ function HomePage() {
       <ServicesCards />
       <CompanyDetails />
       <TalentShare />
+      <Careers />
       <Contact />
     </>
   )
@@ -40,6 +44,7 @@ function App() {
   return (
     <ThemeProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen">
           <Navigation />
           <main>
@@ -53,6 +58,7 @@ function App() {
               <Route path="/services/center-excellence" element={<CenterExcellenceService />} />
               <Route path="/company-details" element={<CompanyDetailsPage />} />
               <Route path="/talent-share-details" element={<TalentShareDetailsPage />} />
+              <Route path="/careers" element={<CareersPage />} />
             </Routes>
           </main>
           <Footer />

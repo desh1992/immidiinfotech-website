@@ -49,7 +49,7 @@ export function Navigation() {
 
     const handleNavigation = (link: any) => {
         if (link.path.startsWith('/#')) {
-            // Handle section scrolling
+            // Handle section scrolling (only for contact)
             const sectionId = link.path.substring(2); // Remove '/#'
             if (location.pathname === '/') {
                 // We're on home page, just scroll
@@ -66,7 +66,7 @@ export function Navigation() {
                 window.location.href = '/';
             }
         } else {
-            // Handle other routes normally
+            // Handle other routes normally - navigate directly to pages
             window.location.href = link.path;
         }
     };
@@ -113,10 +113,10 @@ export function Navigation() {
 
     const navLinks = [
         { id: "home", label: "Home", path: "/" },
-        { id: "services", label: "Services & Solutions", path: "/#services", hasDropdown: true },
-        { id: "careers", label: "Careers", path: "/#careers" },
-        { id: "company", label: "Company Details", path: "/#company" },
-        { id: "talent-share", label: "Talent-Share Project", path: "/#talent-share" },
+        { id: "services", label: "Services & Solutions", path: "/services", hasDropdown: true },
+        { id: "careers", label: "Careers", path: "/careers" },
+        { id: "company", label: "Company Details", path: "/company-details" },
+        { id: "talent-share", label: "Talent-Share Project", path: "/talent-share-details" },
         { id: "contact", label: "Contact Us", path: "/#contact" },
     ];
 
@@ -131,18 +131,12 @@ export function Navigation() {
                         whileHover={{ scale: 1.05 }}
                         transition={{ type: "spring", stiffness: 400, damping: 10 }}
                     >
-                        <div className="w-10 h-10 bg-[#00B483] rounded-lg flex items-center justify-center">
-                            <svg
-                                width="24"
-                                height="24"
-                                viewBox="0 0 24 24"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                            >
-                                <rect x="4" y="4" width="16" height="16" rx="2" fill="white" />
-                                <rect x="6" y="6" width="12" height="8" rx="1" fill="#00B483" />
-                                <rect x="6" y="10" width="12" height="4" rx="1" fill="#00B483" />
-                            </svg>
+                        <div className="w-10 h-10 rounded-lg flex items-center justify-center">
+                            <img 
+                                src="/immidi-logo.png" 
+                                alt="Immidi Infotech Logo" 
+                                className="w-full h-full object-contain"
+                            />
                         </div>
                         <span className="text-xl font-bold text-gray-900">Immidi Infotech</span>
                     </motion.div>
@@ -163,7 +157,7 @@ export function Navigation() {
                                             className={cn(
                                                 "flex items-center space-x-1 text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
                                                 (location.pathname.startsWith('/services') || 
-                                                 (link.path.startsWith('/#') && location.pathname === '/')) && "text-[#00B483]"
+                                                 (link.path === '/services' && location.pathname.startsWith('/services'))) && "text-[#00B483]"
                                             )}
                                         >
                                             <span>{link.label}</span>
@@ -264,7 +258,7 @@ export function Navigation() {
                                             className={cn(
                                                 "flex items-center justify-between w-full text-left px-4 py-2 text-gray-700 hover:text-[#00B483] hover:bg-gray-50 rounded-lg transition-colors duration-200",
                                                 (location.pathname.startsWith('/services') || 
-                                                 (link.path.startsWith('/#') && location.pathname === '/')) && "text-[#00B483] bg-gray-50"
+                                                 (link.path === '/services' && location.pathname.startsWith('/services'))) && "text-[#00B483] bg-gray-50"
                                             )}
                                             onClick={() => {
                                                 handleNavigation(link);

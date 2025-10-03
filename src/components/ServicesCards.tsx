@@ -186,11 +186,11 @@ export function ServicesCards() {
                                     {service.description}
                                 </p>
                                 
-                                <div className="flex items-center text-sm font-semibold group-hover:translate-x-2 transition-transform duration-300">
+                                <div className="flex items-center text-lg font-semibold group-hover:translate-x-2 transition-transform duration-300">
                                     <span className="mr-2 bg-gradient-to-r from-[#00B483] to-[#00B843] bg-clip-text text-transparent">
                                         Learn More
                                     </span>
-                                    <ArrowRight className="w-4 h-4 text-[#00B483]" />
+                                    <ArrowRight className="w-5 h-5 text-[#00B483]" />
                                 </div>
                             </Link>
                         </motion.div>

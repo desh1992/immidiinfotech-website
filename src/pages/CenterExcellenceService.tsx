@@ -343,32 +343,86 @@ export function CenterExcellenceService() {
                     </div>
                 </motion.div>
 
-                {/* Curved Loop Animation - Full Width */}
+                {/* Technology Chips */}
                 <motion.div
                     variants={containerVariants}
                     initial="hidden"
                     animate="visible"
-                    className="mt-20 mb-52"
-                    style={{ 
-                        width: '100vw', 
-                        marginLeft: 'calc(-50vw + 50%)',
-                        maxWidth: '100vw'
-                    }}
+                    className="mt-20 mb-20"
                 >
-                    <div className="relative w-full h-32">
-                        <CurvedLoop 
-                            marqueeText="Center of Excellence ✦ Innovation ✦ Best Practices ✦ Success ✦"
-                            speed={1.5}
-                            curveAmount={250}
-                            direction="left"
-                            interactive={true}
-                            className={cn(
-                                "font-bold",
-                                isLight 
-                                    ? "text-gray-800" 
-                                    : "text-white"
-                            )}
-                        />
+                    <div className="text-center mb-12">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Technologies We Use</h3>
+                        <p className="text-gray-600">Cutting-edge DevOps and development practices</p>
+                    </div>
+                    
+                    <div className="w-full">
+                        <div className="flex animate-marquee whitespace-nowrap">
+                            {[
+                                "Center of Excellence",
+                                "DevOps",
+                                "CI/CD",
+                                "Git",
+                                "Jenkins",
+                                "Docker",
+                                "Kubernetes",
+                                "Microservices",
+                                "API Development",
+                                "Innovation",
+                                "Best Practices",
+                                "GitHub Actions",
+                                "GitLab CI",
+                                "CircleCI",
+                                "Travis CI",
+                                "AWS CodePipeline",
+                                "Azure DevOps",
+                                "Helm",
+                                "Istio",
+                                "Prometheus"
+                            ].map((tech, index) => (
+                                <motion.div
+                                    key={index}
+                                    variants={itemVariants}
+                                    className="bg-white border-2 border-[#00B483] text-[#00B483] px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00B483] hover:text-white transition-all duration-300 cursor-pointer mx-4 flex-shrink-0"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {tech}
+                                </motion.div>
+                            ))}
+                            {/* Duplicate for seamless loop */}
+                            {[
+                                "Center of Excellence",
+                                "DevOps",
+                                "CI/CD",
+                                "Git",
+                                "Jenkins",
+                                "Docker",
+                                "Kubernetes",
+                                "Microservices",
+                                "API Development",
+                                "Innovation",
+                                "Best Practices",
+                                "GitHub Actions",
+                                "GitLab CI",
+                                "CircleCI",
+                                "Travis CI",
+                                "AWS CodePipeline",
+                                "Azure DevOps",
+                                "Helm",
+                                "Istio",
+                                "Prometheus"
+                            ].map((tech, index) => (
+                                <motion.div
+                                    key={`duplicate-${index}`}
+                                    variants={itemVariants}
+                                    className="bg-white border-2 border-[#00B483] text-[#00B483] px-6 py-3 rounded-full text-lg font-semibold shadow-lg hover:bg-[#00B483] hover:text-white transition-all duration-300 cursor-pointer mx-4 flex-shrink-0"
+                                    whileHover={{ scale: 1.05 }}
+                                    whileTap={{ scale: 0.95 }}
+                                >
+                                    {tech}
+                                </motion.div>
+                            ))}
+                        </div>
                     </div>
                 </motion.div>
 
@@ -406,10 +460,7 @@ export function CenterExcellenceService() {
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
                             onClick={() => {
-                                const element = document.getElementById('contact');
-                                if (element) {
-                                    element.scrollIntoView({ behavior: 'smooth' });
-                                }
+                                window.location.href = '/#contact';
                             }}
                         >
                             <Award className="w-5 h-5 mr-2" />
