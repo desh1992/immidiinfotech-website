@@ -48,7 +48,10 @@ export function Navigation() {
     };
 
     const handleNavigation = (link: any) => {
-        if (link.path.startsWith('/#')) {
+        if (link.path === '#') {
+            // Services dropdown - do nothing, just show dropdown
+            return;
+        } else if (link.path.startsWith('/#')) {
             // Handle section scrolling (only for contact)
             const sectionId = link.path.substring(2); // Remove '/#'
             if (location.pathname === '/') {
@@ -113,7 +116,7 @@ export function Navigation() {
 
     const navLinks = [
         { id: "home", label: "Home", path: "/" },
-        { id: "services", label: "Services & Solutions", path: "/services", hasDropdown: true },
+        { id: "services", label: "Services & Solutions", path: "#", hasDropdown: true },
         { id: "careers", label: "Careers", path: "/careers" },
         { id: "company", label: "Company Details", path: "/company-details" },
         { id: "talent-share", label: "Talent-Share Project", path: "/talent-share-details" },
@@ -153,7 +156,6 @@ export function Navigation() {
                                         onMouseLeave={handleMouseLeave}
                                     >
                                         <button
-                                            onClick={() => handleNavigation(link)}
                                             className={cn(
                                                 "flex items-center space-x-1 text-gray-700 hover:text-[#00B483] font-medium transition-colors duration-200",
                                                 (location.pathname.startsWith('/services') || 
@@ -261,7 +263,6 @@ export function Navigation() {
                                                  (link.path === '/services' && location.pathname.startsWith('/services'))) && "text-[#00B483] bg-gray-50"
                                             )}
                                             onClick={() => {
-                                                handleNavigation(link);
                                                 setIsServicesDropdownOpen(!isServicesDropdownOpen);
                                             }}
                                         >
